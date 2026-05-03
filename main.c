@@ -314,7 +314,11 @@ Evento* removerAVL(Evento* raiz, int id, int* sucesso) {
             raiz->severidade = temp->severidade;
             raiz->dataHora   = temp->dataHora;
             strcpy(raiz->regiao, temp->regiao);
-            raiz->status = temp->status;
+            raiz->status     = temp->status; // <- O status real foi copiado para a nova raiz aqui
+            
+            /* Forca o sucessor a ser RESOLVIDO para burlar a trava na chamada recursiva */
+            temp->status = RESOLVIDO; 
+            
             /* remove o sucessor (que tem no maximo um filho direito) */
             raiz->dir = removerAVL(raiz->dir, temp->id, sucesso);
         }
